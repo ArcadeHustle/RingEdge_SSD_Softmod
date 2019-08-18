@@ -296,6 +296,8 @@ Now replace the original drive with the new drive, write the cloned data, and lo
 # dd if=../ringedge_drive_image.img  of=/dev/sdb bs=1M status=progress
 ```
 
+Please note: You will STILL need to have the proper security key in order to play the cloned drive. 
+
 Have fun! Be safe! We will be back with more soon.
 
 Official video tutorial for the RingEdge SSD softmod by Mitsu (as usual!) can be found here: https://www.youtube.com/watch?v=l0nq1pQXX90
