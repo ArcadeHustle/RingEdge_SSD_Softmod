@@ -11,7 +11,7 @@ Big thanks to Mitsurugi_w, Darksoft, and Brizzo of Arcade Projects for finally a
 </p>
 
 # Stage One:
-"アーケード版『ボーダーブレイク』の今後について" (The future of the arcade version of “Border Break”) 
+"アーケード版『ボーダーブレイク』の今後について" (The future of the arcade version of “Border Break”)<br>
 As of 2019-06-06 the arcade version of BorderBreak will be no more than a memory - http://borderbreak.com/news/1186
 
 <p align="center">
@@ -30,8 +30,8 @@ manufacturing. Another reason is that it has become difficult to provide you wit
 people are still playing the arcade version, it is very painful to have reached such an announcement, but I hope that the last 10 
 years of glory will be met."
 
-The full text is archived here
-https://pastebin.com/raw/XpkMXQgw
+The full text is archived here<br>
+https://pastebin.com/raw/XpkMXQgw<br>
 https://translate.google.com/translate?sl=ja&tl=en&u=https%3A%2F%2Fpastebin.com%2Fraw%2FXpkMXQgw
 
 Additional text relevant to this document can be found below: 
@@ -66,7 +66,7 @@ detail from two Ring* Solid State Disk drives.
 RingEdge MDA-E0005
 GBDisk RS2 32GB
 
-Controller - TDK GBDriver RS2 W5AB0067
+Controller - TDK GBDriver RS2 W5AB0067<br>
 https://product.tdk.com/info/en/catalog/datasheets/ew_015_rs2.pdf
 
 ```
@@ -84,7 +84,7 @@ ATA device, with non-removable media
 RingEdge MDA-E0007A
 GBDisk RS3 32GB 
 
-Controller - TDK GBDriver RS3 W5AB0084
+Controller - TDK GBDriver RS3 W5AB0084<br>
 https://product.tdk.com/info/en/catalog/datasheets/ew_018_rs3.pdf
 
 ```
@@ -112,11 +112,11 @@ One example of a known working JMF based drive is the KingSpec SSD: KSD-SA25.7-X
 Below is an example of a known working donor drive that can be provisioned to appear as the *required* TDK GBDriver model. 
 
 ## Donor drive label:
-32GB Transcend
-TS32GSSD370S
+32GB Transcend<br>
+TS32GSSD370S<br>
 Buy: https://www.amazon.com/gp/product/B00VX82PJC/
 
-Controller - Silicon Motion SM2246EN
+Controller - Silicon Motion SM2246EN<br>
 http://www.siliconmotion.com/A3.2_Partnumber_Detail.php?sn=7
 
 ```
@@ -133,15 +133,15 @@ ATA device, with non-removable media
 SM2246 Secondary MP Tool Q0321A from USBDev.ru can be used to provision the example drive on a Windows machine.
 https://www.usbdev.ru/files/smi/secondarymp/
 
-Check "Update Serial Number"
-Serial Number should be set to "Normal SN"
-SN Length "20"
-Serial Mask "TSS-"
-Begin Serial "TSS-G0fuckAdarksoft1"
-End Serial "TSS-G0fuckAdarksoft2"
-Check "Update Model Name"
-Model Name "GBDriver RS2"
-Vendor Specific "TRANSCEND"
+Check "Update Serial Number"<br>
+Serial Number should be set to "Normal SN"<br>
+SN Length "20"<br>
+Serial Mask "TSS-"<br>
+Begin Serial "TSS-G0fuckAdarksoft1"<br>
+End Serial "TSS-G0fuckAdarksoft2"<br>
+Check "Update Model Name"<br>
+Model Name "GBDriver RS2"<br>
+Vendor Specific "TRANSCEND"<br>
 
 <p align="center">
 <img src="https://github.com/ArcadeHustle/RingEdge_SSD_Softmod/blob/master/MPToolWrite.PNG">
@@ -218,8 +218,8 @@ Armed with this information you can unlock the original drive and clone it.
 ```
 # echo -e "\x72\x42\x52\x5A\xBA\x52\x6A\x5A\xEA\x72\x62\x78\xCA\x42\xDA\x4A\x2A\x22\x3A\x2A\x0A\x22\x1A\x2A\x6A\x02\x7A\x0A\x5C\xCE\x4A\x0A" > file
 ```
-You can download the hdparm patch from here: https://sourceforge.net/p/hdparm/feature-requests/14/
-"#14 Add ability to specify non-ASCII security passwords"
+You can download the hdparm patch from here: https://sourceforge.net/p/hdparm/feature-requests/14/<br>
+"#14 Add ability to specify non-ASCII security passwords"<br>
 Specifically you need https://sourceforge.net/p/hdparm/feature-requests/_discuss/thread/a242a074/1760/attachment/security_file_diff.txt
 
 The HDParm source should be pulled from github. 
