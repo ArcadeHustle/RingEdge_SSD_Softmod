@@ -142,6 +142,9 @@ End Serial "TSS-G0fuckAdarksoft2"<br>
 Check "Update Model Name"<br>
 Model Name "GBDriver RS2"<br>
 Vendor Specific "TRANSCEND"<br>
+<br>
+It is really important to use the Serial "TSS-G0fuckAdarksoft1" in order to bypass the drive checks. Other serials
+may work, but this pattern is known to work with RingEdge and RingWide devices. 
 
 <p align="center">
 <img src="https://github.com/ArcadeHustle/RingEdge_SSD_Softmod/blob/master/MPToolWrite.PNG">
