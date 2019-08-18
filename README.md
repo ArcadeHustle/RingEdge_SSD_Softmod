@@ -199,9 +199,10 @@ is really important to be using device that is known to work. Below are some kno
 One very common generic SATA adapter is on the known bad list. JM20337 is used in many SATA -> USB adapters! 
 
 ## Works:
+https://amazon.com/Thermaltake-Externa…ng-N0028USU/dp/B0012Z3MKW
 ```
 ID 174c:55aa ASMedia Technology Inc. ASM1051E SATA 6Gb/s bridge, ASM1053E SATA 6Gb/s bridge, ASM1153 SATA 3Gb/s bridge
-ID 13fd:0840 Initio Corporation INIC-1618L SATA - https://amazon.com/Thermaltake-Externa…ng-N0028USU/dp/B0012Z3MKW
+ID 13fd:0840 Initio Corporation INIC-1618L SATA - 
 ID 7825:a2a4 - Kingwin unknown model.  
 ```
 ## Fails:
