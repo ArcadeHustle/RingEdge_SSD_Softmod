@@ -200,6 +200,7 @@ One very common generic SATA adapter is on the known bad list. JM20337 is used i
 
 ## Works:
 https://amazon.com/Thermaltake-Externa…ng-N0028USU/dp/B0012Z3MKW
+https://www.amazon.com/StarTech-com-10Gbps-Adapter-Cable-Drives/dp/B00XLAZODE
 ```
 ID 174c:55aa ASMedia Technology Inc. ASM1051E SATA 6Gb/s bridge, ASM1053E SATA 6Gb/s bridge, ASM1153 SATA 3Gb/s bridge
 ID 13fd:0840 Initio Corporation INIC-1618L SATA - 
