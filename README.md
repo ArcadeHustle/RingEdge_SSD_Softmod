@@ -104,6 +104,9 @@ the MPTools for any given drive can be a difficult task, although many tools are
 Once you have obtained the proper MPTool, you can change the Model Number, and Serial number of the drive. In somecases you can also 
 change the Firmware Revision. 
 
+If you still have no clue what an MPTool is, please contact Darksoft or Mitsurugi_w on Arcade Projects forum and ask for help with the RingEdge
+SSD softmod. https://www.arcade-projects.com/forums/index.php?board/73-sega-ringedge-ringwide-and-nu/
+
 Two SSD controllers brands known to frequently have their MPTools *leaked* are JMicron and Silicon Motion. Jmicron JMF6xx series are known to be 
 usable however we have instead chosen to make use of SMI (Silicon Motion) based drives. It should be noted that cloned Ring* SSD drives have been 
 seen sold on eBay using JMicron JMF605 and JMF607 controller based drives in the past. http://www.jmicron.com/PDF/brief/jmf607.pdf
