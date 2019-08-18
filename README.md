@@ -133,7 +133,6 @@ ATA device, with non-removable media
 SM2246 Secondary MP Tool Q0321A from USBDev.ru can be used to provision the example drive on a Windows machine.
 https://www.usbdev.ru/files/smi/secondarymp/
 
-```
 Check "Update Serial Number"
 Serial Number should be set to "Normal SN"
 SN Length "20"
@@ -143,9 +142,17 @@ End Serial "TSS-G0fuckAdarksoft2"
 Check "Update Model Name"
 Model Name "GBDriver RS2"
 Vendor Specific "TRANSCEND"
-```
+
+<p align="center">
+<img src="https://github.com/ArcadeHustle/RingEdge_SSD_Softmod/blob/master/MPToolWrite.PNG">
+</p>
 
 SM2246EN should be selected in the right corner, click Start. 
+
+Once complete you should see the following
+<p align="center">
+<img src="https://github.com/ArcadeHustle/RingEdge_SSD_Softmod/blob/master/MPToolSuccess.PNG">
+</p>
 
 Please note, if the drive is locked, you won't see it in the MPTool!
 
