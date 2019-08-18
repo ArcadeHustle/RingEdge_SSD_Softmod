@@ -47,7 +47,7 @@ or To allow preservation in a playable format..."
 
 Please note that the following text is considered "for purposes of good-faith security research".
 
-For now some of this information will be further gatekept. This will write up will absolutly however give you all the access 
+For now some of this information will be further gatekept. This write up will absolutly however give you all the access 
 you need to backup and preserve your RingEdge hardware featuring BorderBreak. Please note that this preservation may apply
 to other devices in the Ring* family such as RingEdge2, and RingWide. 
 
