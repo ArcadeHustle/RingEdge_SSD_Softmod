@@ -289,17 +289,19 @@ Read 32 bytes from "file".
  Issuing SECURITY_UNLOCK command, password="[read from file]", user=user
 
 # dd of=../ringedge_drive_image.img  if=/dev/sdb bs=1M status=progress
+```
+
+Now replace the original drive with the new drive, write the cloned data, and lock the drive back  
+
+```
+# dd if=../ringedge_drive_image.img  of=/dev/sdb bs=1M status=progress
 
 # ./lock.sh 
 Read 32 bytes from "file".
 
 /dev/sdb:
  Issuing SECURITY_SET_PASS command, password="[read from file]", user=user, mode=high
-```
 
-Now replace the original drive with the new drive, write the cloned data, and lock the drive back  
-```
-# dd if=../ringedge_drive_image.img  of=/dev/sdb bs=1M status=progress
 ```
 
 Please note: You will STILL need to have the proper security key in order to play the cloned drive. 
