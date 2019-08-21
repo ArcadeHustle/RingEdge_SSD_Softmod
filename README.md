@@ -232,7 +232,7 @@ Specifically you need https://sourceforge.net/p/hdparm/feature-requests/_discuss
 
 The HDParm source should be pulled from github. 
 ```
-# git clone github.com/Distrotech/hdparm.git; cd hdparm
+# git clone https://github.com/Distrotech/hdparm.git; cd hdparm
 Cloning into 'hdparm'...
 remote: Enumerating objects: 1, done.
 remote: Counting objects: 100% (1/1), done.

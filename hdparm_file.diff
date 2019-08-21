@@ -1,0 +1,173 @@
+diff --git a/hdparm.c b/hdparm.c
+index bdacc69..b392c6e 100644
+--- a/hdparm.c
++++ b/hdparm.c
+@@ -133,6 +133,7 @@ static __u64 set_max_addr = 0;
+ static int	get_doreset = 0, set_doreset = 0;
+ static int	i_know_what_i_am_doing = 0;
+ static int	please_destroy_my_drive = 0;
++static int  password_from_file = 0;
+ 
+ const int timeout_15secs = 15;
+ const int timeout_60secs = 60;
+@@ -793,8 +794,11 @@ do_set_security (int fd)
+ 			fprintf(stderr, "BUG in do_set_security(), command1=0x%x\n", security_command);
+ 			exit(EINVAL);
+ 	}
++  /* Don't print password if it was read from a file, since it may contain non-printable
++   * chars. A better solution might be to print a hex dump of the password in that case. */
+ 	printf(" Issuing %s command, password=\"%s\", user=%s",
+-		description, security_password, (data[0] & 1) ? "master" : "user");
++		description, password_from_file ? "[FukkaDarkSoft]" : security_password,
++    (data[0] & 1) ? "master" : "user");
+ 	if (security_command == ATA_OP_SECURITY_SET_PASS)
+ 		printf(", mode=%s", data[1] ? "max" : "high");
+ 	printf("\n");
+@@ -1527,10 +1531,16 @@ static void security_help (int rc)
+ 	" --security-set-pass PASSWD  Lock drive, using password PASSWD:\n"
+ 	"                                  Use 'NULL' to set empty password.\n"
+ 	"                                  Drive gets locked if user-passwd is selected.\n"
++  " --security-set-pass-from-file FILE  Lock drive, reading password from FILE.\n"
+ 	" --security-unlock   PASSWD  Unlock drive.\n"
++  " --security-unlock-from-file FILE    Unlock drive, reading password from FILE.\n"
+ 	" --security-disable  PASSWD  Disable drive locking.\n"
++  " --security-disable-from-file FILE   Disable drive locking, reading password from FILE.\n"
+ 	" --security-erase    PASSWD  Erase a (locked) drive.\n"
+-	" --security-erase-enhanced PASSWD   Enhanced-erase a (locked) drive.\n"
++  " --security-erase-from-file FILE     Erase a (locked) drive, reading password from FILE.\n"
++	" --security-erase-enhanced PASSWD    Enhanced-erase a (locked) drive.\n"
++  " --security-erase-enhanced-from-file FILE  Enhanced-erase a (locked) drive, reading\n"
++  "                                           password from FILE.\n"
+ 	"\n"
+ 	" The above four commands may optionally be preceded by these options:\n"
+ 	" --security-mode  LEVEL      Use LEVEL to select security level:\n"
+@@ -2437,9 +2447,11 @@ numeric_parm (char c, const char *name, int *val, int *setparm, int *getparm, in
+ #define      DO_FLAG(CH,VAR)              CH:VAR=1;noisy=1;break
+ #define    INCR_FLAG(CH,VAR)              CH:VAR++;noisy=1;break
+ 
+-static void get_security_password (int handle_NULL)
++static void get_security_password (int handle_NULL, int fromfile)
+ {
+ 	unsigned int maxlen = sizeof(security_password) - 1;
++  FILE *passwordfile;
++  size_t len_read;
+ 
+ 	if (argc < 2) {
+ 		fprintf(stderr, "missing PASSWD\n");
+@@ -2450,16 +2462,57 @@ static void get_security_password (int handle_NULL)
+ 		fprintf(stderr, "missing PASSWD\n");
+ 		exit(EINVAL);
+ 	}
+-	if (strlen(argp) > maxlen) {
+-		fprintf(stderr, "PASSWD too long (must be %d chars max)\n", maxlen);
+-		exit(EINVAL);
+-	}
++
+ 	memset(security_password, 0, maxlen + 1);
+-	if (!handle_NULL || strcmp(argp, "NULL"))
+-		strcpy(security_password, argp);
+-	printf("security_password=\"%s\"\n", security_password);
++
++  if (!fromfile) {
++  	if (strlen(argp) > maxlen) {
++  		fprintf(stderr, "PASSWD too long (must be %d chars max)\n", maxlen);
++  		exit(EINVAL);
++	  }
++	  if (!handle_NULL || strcmp(argp, "NULL"))
++  		strcpy(security_password, argp);
++	  printf("security_password=\"%s\"\n", security_password);
++  } else {
++    passwordfile = fopen(argp, "rb");
++    if (0 == passwordfile) {
++      fprintf(stderr, "Could not open \"%s\"\n", argp);
++      exit(EINVAL);
++    } else {
++      len_read = fread(security_password, 1, maxlen, passwordfile);
++      if (0 == len_read) {
++        fprintf(stderr, "Could not read password from \"%s\"\n", argp);
++        exit(EINVAL);
++      } else {
++        password_from_file = 1;
++        printf(" ,---.              ,--.                                                         
++		/  .-',--.,--. ,---.|  |,-.                                                      
++		|  `-,|  ||  || .--'|     /                                                      
++		|  .-''  ''  '\ `--.|  \  \                                                      
++		`--'   `----'  `---'`--'`--'                                                     
++		   ,--.               ,--.                   ,---.  ,--.                         
++		 ,-|  | ,--,--.,--.--.|  |,-.  ,---.  ,---. /  .-',-'  '-.                       
++		' .-. |' ,-.  ||  .--'|     / (  .-' | .-. ||  `-,'-.  .-'                       
++		\ `-' |\ '-'  ||  |   |  \  \ .-'  `)' '-' '|  .-'  |  |                         
++		 `---'  `--`--'`--'   `--'`--'`----'  `---' `--'    `--'                         
++		,-----.         ,--.                          ,---.                              
++		|  |) /_ ,--.--.`--',-----.,-----. ,---.     |  o ,-.                            
++		|  .-.  \|  .--',--.`-.  / `. |    .'     /_                           
++		|  '--' /|  |   |  | /  `-. /  `-.' '-' '    |  o  .__)                          
++		`------' `--'   `--'`-----'`-----' `---'      `---'                              
++		          ,--.  ,--.                                       ,--.                  
++		,--,--,--.`--',-'  '-. ,---. ,--.,--.,--.--.,--.,--. ,---. `--'      ,--.   ,--. 
++		|        |,--.'-.  .-'(  .-' |  ||  ||  .--'|  ||  || .-. |,--.      |  |.'.|  | 
++		|  |  |  ||  |  |  |  .-'  `)'  ''  '|  |   '  ''  '' '-' '|  |,----.|   .'.   | 
++		`--`--`--'`--'  `--'  `----'  `----' `--'    `----' .`-  / `--''----''--'   '--' \n");
++        if (len_read < maxlen)
++          printf("(The remaining %d will be set to 0)\n", (int)(maxlen - len_read));
++      }
++      fclose(passwordfile);
++    }
++  }
+ 	while (*argp)
+-		++argp;
++   	++argp;
+ }
+ 
+ static const char *lba_emsg = "bad/missing sector value";
+@@ -2537,24 +2590,45 @@ handle_standalone_longarg (char *name)
+ 	} else if (0 == strcasecmp(name, "security-unlock")) {
+ 		set_security = 1;
+ 		security_command = ATA_OP_SECURITY_UNLOCK;
+-		get_security_password(0);
++		get_security_password(0, 0);
++	} else if (0 == strcasecmp(name, "security-unlock-from-file")) {
++		set_security = 1;
++		security_command = ATA_OP_SECURITY_UNLOCK;
++		get_security_password(0, 1);
+ 	} else if (0 == strcasecmp(name, "security-set-pass")) {
+ 		set_security = 1;
+ 		security_command = ATA_OP_SECURITY_SET_PASS;
+-		get_security_password(1);
++		get_security_password(1, 0);
++	} else if (0 == strcasecmp(name, "security-set-pass-from-file")) {
++		set_security = 1;
++		security_command = ATA_OP_SECURITY_SET_PASS;
++		get_security_password(1, 1);
+ 	} else if (0 == strcasecmp(name, "security-disable")) {
+ 		set_security = 1;
+ 		security_command = ATA_OP_SECURITY_DISABLE;
+-		get_security_password(1);
++		get_security_password(1, 0);
++	} else if (0 == strcasecmp(name, "security-disable-from-file")) {
++		set_security = 1;
++		security_command = ATA_OP_SECURITY_DISABLE;
++		get_security_password(1, 1);
+ 	} else if (0 == strcasecmp(name, "security-erase")) {
+ 		set_security = 1;
+ 		security_command = ATA_OP_SECURITY_ERASE_UNIT;
+-		get_security_password(1);
++		get_security_password(1, 0);
++	} else if (0 == strcasecmp(name, "security-erase-from-file")) {
++		set_security = 1;
++		security_command = ATA_OP_SECURITY_ERASE_UNIT;
++		get_security_password(1, 1);
+ 	} else if (0 == strcasecmp(name, "security-erase-enhanced")) {
+ 		set_security = 1;
+ 		enhanced_erase = 1;
+ 		security_command = ATA_OP_SECURITY_ERASE_UNIT;
+-		get_security_password(1);
++		get_security_password(1, 0);
++	} else if (0 == strcasecmp(name, "security-erase-enhanced-from-file")) {
++		set_security = 1;
++		enhanced_erase = 1;
++		security_command = ATA_OP_SECURITY_ERASE_UNIT;
++		get_security_password(1, 1);
+ 	} else {
+ 		usage_help(3,EINVAL);
+ 	}
