@@ -99,7 +99,7 @@ ATA device, with non-removable media
 ```
 
 If you wish to archive, or replace your original drive you can search for used TDK GBDriver disks, or alternately you can provision 
-certain drives to be identical to a GBDriver disk. MP (Mass Production) tools are used to configure SDD drive paramaters. Finding 
+certain drives to be identical to a GBDriver disk. MP (Mass Production) tools are used to configure SDD drive parameters. Finding 
 the MPTools for any given drive can be a difficult task, although many tools are archived at https://www.usbdev.ru or http://www.upantool.com
 Once you have obtained the proper MPTool, you can change the Model Number, and Serial number of the drive. In somecases you can also 
 change the Firmware Revision. 
